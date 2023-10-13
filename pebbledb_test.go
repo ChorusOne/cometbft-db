@@ -23,4 +23,18 @@ func TestPebbleDBBackend(t *testing.T) {
 	assert.True(t, ok)
 }
 
+func BenchmarkPebbleDBRandomReadsWrites(b *testing.B) {
+	name := fmt.Sprintf("test_%x", randStr(12))
+	db, err := NewPebbleDB(name, "")
+	if err != nil {
+		b.Fatal(err)
+	}
+	defer func() {
+		db.Close()
+		cleanupDBDir("", name)
+	}()
+
+	benchmarkRandomReadsWrites(b, db)
+}
+
 // TODO: Add tests for pebbledb
