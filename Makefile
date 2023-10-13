@@ -31,6 +31,11 @@ test-rocksdb:
 	@go test $(PACKAGES) -tags rocksdb -v
 .PHONY: test-rocksdb
 
+test-pebbledb:
+	@echo "--> Running go test"
+	@go test $(PACKAGES) -tags pebbledb -v
+.PHONY: test-pebbledb
+
 test-boltdb:
 	@echo "--> Running go test"
 	@go test $(PACKAGES) -tags boltdb -v
@@ -43,7 +48,7 @@ test-badgerdb:
 
 test-all:
 	@echo "--> Running go test"
-	@go test $(PACKAGES) -tags cleveldb,boltdb,rocksdb,grocksdb_clean_link,badgerdb -v
+	@go test $(PACKAGES) -tags cleveldb,boltdb,rocksdb,pebbledb,grocksdb_clean_link,badgerdb -v
 .PHONY: test-all
 
 test-all-with-coverage:
@@ -54,7 +59,7 @@ test-all-with-coverage:
 		-race \
 		-coverprofile=coverage.txt \
 		-covermode=atomic \
-		-tags=memdb,goleveldb,cleveldb,boltdb,rocksdb,grocksdb_clean_link,badgerdb \
+		-tags=memdb,goleveldb,cleveldb,boltdb,rocksdb,pebbledb,grocksdb_clean_link,badgerdb \
 		-v
 .PHONY: test-all-with-coverage
 
